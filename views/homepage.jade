@@ -1,10 +1,11 @@
 extends layout
 
 block content
-	p #{title}
+	input(type='hidden', id='usercolor', value='#{background}')
+	h1 #{title}
 	img(src=picture)
 
-	form(action='/color', method='post', class='color')
-		input(name='Color', class="colorname")
+	form(action='/color', method='post', class='color', id='colorpick')
+		input(name='Color', class="colorname", id="colorname")
 		button('type='submit')
 			| Submit

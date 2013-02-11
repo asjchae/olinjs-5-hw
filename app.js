@@ -55,6 +55,12 @@ app.get('/', facebookGetUser(), user.main);
 
 app.post('/color', facebookGetUser(), user.color);
 
+app.get('/logout', facebookGetUser(), function(req, res){
+  req.user = null;
+  req.session.destroy();
+  res.redirect('/');
+});
+
 function facebookGetUser() {
   return function(req, res, next) {
     req.facebook.getUser(function(err, user) {

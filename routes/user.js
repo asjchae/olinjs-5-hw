@@ -25,7 +25,7 @@ exports.main = function(req, res) {
 			}
 			req.session.user = user || newfbuser;
 			req.facebook.api('/me/picture?redirect=false&type=large', function(err, data) {
-				res.render('homepage', {title: "Homepage", picture: data.data.url, background: user.color})
+				res.render('homepage', {title: "Homepage", picture: data.data.url, background: user.background})
 			});
 		});
 	});
@@ -38,7 +38,27 @@ exports.login = function(req, res) {
 }
 
 exports.color = function(req, res) {
-	FacebookUser.findOne({FBID: req.user}).exec(function (err, user) {
+	req.facebook.api('/me', function(err, fbuser) {
+		if (err) {
+			return console.log("error", err);
+		}
+
+		FacebookUser.findOne({FBID: fbuser.id}).exec(function(err, user) {
+			if (err) {
+				console.log("error", err);
+			}
+			user.background = req.body.color;
+			user.save(function (err) {
+				if (err) {
+					console.log("Problem saving color", err);
+				} else {
+					console.log(user);
+					res.redirect('/');
+				}
+			})
+		})
+	})
+	/*FacebookUser.findOne({FBID: req.user}).exec(function (err, user) {
 		if (err) {
 			console.log("Could not find user", err);
 		} else {
@@ -47,10 +67,10 @@ exports.color = function(req, res) {
 				if (err) {
 					console.log("Problem saving color", err);
 				} else {
-					res.redirect('/')
+					res.redirect('/');
 				}
 			});
 
 		}
-	});
+	});*/
 }
