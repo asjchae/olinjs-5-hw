@@ -9,7 +9,8 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , express = require('express')
-  , Facebook = require('facebook-node-sdk');
+  , Facebook = require('facebook-node-sdk')
+  , mongoose = require('mongoose');
 
 var app = express();
 var facebook = new Facebook({ appId: '108219792693237', secret: '3244b6e5a6c4d5ecc2ae9fbfd931be97'});
@@ -23,10 +24,12 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser('3244b6e5a6c4d5ecc2ae9fbfd931be97'));
-  app.use(express.session({secret: '3244b6e5a6c4d5ecc2ae9fbfd931be97'}));
+  app.use(express.session());
   app.use(Facebook.middleware({appId: '108219792693237', secret: '3244b6e5a6c4d5ecc2ae9fbfd931be97'}));
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
+  mongoose.connect(process.env.MONGOLAB_URI || 'localhost/fbusers');
+
 });
 
 app.configure('development', function(){
@@ -46,21 +49,18 @@ app.get('/', Facebook.loginRequired(), function (req, res) {
 });
 */
 
-app.get('/login', Facebook.loginRequired(), function (req, res) {
-  res.redirect('/');
-})
+app.get('/login', Facebook.loginRequired(), user.login);
 
-app.post('/login', Facebook.loginRequired(), function (req, res) {
-  res.redirect('/');
-})
+app.get('/', facebookGetUser(), user.main);
 
-app.get('/', user.main);
+app.post('/color', facebookGetUser(), user.color);
 
-function checkFB(req, res) {
+function facebookGetUser() {
   return function(req, res, next) {
     req.facebook.getUser(function(err, user) {
+      console.log(user);
       if (!user || err){
-        res.render('routeLogin', {title: "Log In!"});
+        res.send("You need to log in");
       } else {
         req.user = user;
         next();

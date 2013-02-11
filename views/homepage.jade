@@ -1,0 +1,10 @@
+extends layout
+
+block content
+	p #{title}
+	img(src=picture)
+
+	form(action='/color', method='post', class='color')
+		input(name='Color', class="colorname")
+		button('type='submit')
+			| Submit
