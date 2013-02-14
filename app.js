@@ -6,6 +6,7 @@
 var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
+  , carousel = require('./routes/carousel')
   , http = require('http')
   , path = require('path')
   , express = require('express')
@@ -60,6 +61,8 @@ app.get('/logout', facebookGetUser(), function(req, res){
   req.session.destroy();
   res.redirect('/');
 });
+
+app.get('/widget', carousel.widget);
 
 function facebookGetUser() {
   return function(req, res, next) {
