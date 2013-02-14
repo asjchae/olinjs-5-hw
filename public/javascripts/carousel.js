@@ -1,9 +1,8 @@
-$(document).ready(function() {
+$(window).load(function() {
 	$("#carousel").rcarousel({
-		width:200,
-		height:200,
+		width:450,
+		height:300,
 		visible: 1,
-		step: 1,
-		margin: 5
+		step: 1
 	});
 });

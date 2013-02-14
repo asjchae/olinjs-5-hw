@@ -2,18 +2,26 @@ extends layout
 
 block head
   link(type='text/css', rel='stylesheet', href='javascripts/widget/css/rcarousel.css')
-
-
-block style
   script(type='text/javascript', src='javascripts/widget/lib/jquery-1.7.1.min.js')
   script(type='text/javascript', src='javascripts/widget/lib/jquery.ui.core.min.js')
   script(type='text/javascript', src='javascripts/widget/lib/jquery.ui.widget.min.js')
   script(type='text/javascript', src='javascripts/widget/lib/jquery.ui.rcarousel.min.js')
   script(src="/javascripts/carousel.js")
-    
-block content
-  div#carousel
-    img(src='http://i.imgur.com/AfYpE.jpg', alt='cute')
-    img(src='http://i.imgur.com/AfYpE.jpg', alt='cutee')
-    img(src='http://i.imgur.com/AfYpE.jpg', alt='cuteee')
-    img(src='http://i.imgur.com/AfYpE.jpg', alt='cuteeee')
+
+
+//- block style
+//-   script(type='text/javascript', src='javascripts/widget/lib/jquery-1.7.1.min.js')
+//-   script(type='text/javascript', src='javascripts/widget/lib/jquery.ui.core.min.js')
+//-   script(type='text/javascript', src='javascripts/widget/lib/jquery.ui.widget.min.js')
+//-   script(type='text/javascript', src='javascripts/widget/lib/jquery.ui.rcarousel.min.js')
+//-   script(src="/javascripts/carousel.js")
+body 
+  block content
+    div#carousel(class='carousel')
+      for friend in frienddata
+        if(friend.photos)
+          img(src=friend.photos.source)
+
+    div(class='navi')
+      a#ui-carousel-prev(href='#') PREV
+      a#ui-carousel-next(href='#') NEXT

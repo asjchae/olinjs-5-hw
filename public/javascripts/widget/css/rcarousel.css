@@ -1,3 +1,7 @@
+body {
+	background-color: LightGreen;
+}
+
 .ui-carousel {
 	height: 100px;
 	margin: 0;
@@ -16,8 +20,32 @@
 .ui-carousel > .wrapper > * {
 	border: 0;
 	display: block;
-	float: left;
 	height: 100px;
 	overflow: hidden;
 	width: 100px;	
+}
+
+
+a#ui-carousel-prev {
+	border: dotted orange 5px;
+	display: inline-block;
+	margin-right: 180px;
+	margin-left: 85px;
+	margin-top: 10px;
+}
+
+a#ui-carousel-next {
+	border: dotted orange 5px;
+	display: inline-block;
+	margin-top: 10px;
+}
+
+
+div.carousel {
+	border: solid black 10px;
+	display: block;
+}
+
+div.navi {
+	display: block;
 }

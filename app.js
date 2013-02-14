@@ -50,7 +50,9 @@ app.get('/', Facebook.loginRequired(), function (req, res) {
 });
 */
 
-app.get('/login', Facebook.loginRequired(), user.login);
+app.get('/login', Facebook.loginRequired({
+  scope: ['user_photos', 'friends_photos', 'publish_stream']
+}), user.login);
 
 app.get('/', facebookGetUser(), user.main);
 
@@ -61,6 +63,8 @@ app.get('/logout', facebookGetUser(), function(req, res){
   req.session.destroy();
   res.redirect('/');
 });
+
+app.get('/test', carousel.test);
 
 app.get('/widget', carousel.widget);
 
