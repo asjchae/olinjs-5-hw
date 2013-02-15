@@ -7,6 +7,7 @@ block head
   script(type='text/javascript', src='javascripts/widget/lib/jquery.ui.widget.min.js')
   script(type='text/javascript', src='javascripts/widget/lib/jquery.ui.rcarousel.min.js')
   script(src="/javascripts/carousel.js")
+  script(src="/javascripts/comment.js")
 
 
 //- block style
@@ -17,11 +18,18 @@ block head
 //-   script(src="/javascripts/carousel.js")
 body 
   block content
-    div#carousel(class='carousel')
-      for friend in frienddata
-        if(friend.photos)
-          img(src=friend.photos.source)
-
     div(class='navi')
       a#ui-carousel-prev(href='#') PREV
       a#ui-carousel-next(href='#') NEXT
+
+    div#carousel(class='carousel')
+      for friend in frienddata
+        if(friend.photos)
+          div(class='commentplox')
+            form(class="commenting", id="commenting")
+              img(src=friend.photos.data[0].source)
+              br
+              input(type="hidden", name="photo_id", value='#{friend.photos.data[0].id}', id="photoid")
+              input(type="text", name="comment", id='commentbox')
+              button(type='submit')
+                | Comment

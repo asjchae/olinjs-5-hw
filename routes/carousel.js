@@ -24,8 +24,24 @@ exports.test = function(req, res) {
 			req.session.user = user || new fbuser;
 			
 			req.facebook.api('/me?fields=friends.limit(12).fields(name,photos.limit(1).fields(source,name))', function(err, data) {
-				res.render('carousel', {title: "Picture", frienddata: data.friends.data});
+				res.render('carousel', {title: "Pictures", frienddata: data.friends.data});
 			});
 		});
+	});
+}
+
+exports.comment = function(req, res) {
+	console.log(req.body);
+	console.log(req.body.comment);
+	console.log(req.body.photoid);
+
+	req.facebook.api('/'+req.body.photoid+'/comments','post',{message:req.body.comment}, function(err, response) {
+		if (err) {
+			console.log("error", err);
+			res.send(err);
+		} else {
+			res.send(err);
+		}
+
 	});
 }

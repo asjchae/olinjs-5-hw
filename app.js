@@ -68,6 +68,8 @@ app.get('/test', carousel.test);
 
 app.get('/widget', carousel.widget);
 
+app.post('/comment', carousel.comment);
+
 function facebookGetUser() {
   return function(req, res, next) {
     req.facebook.getUser(function(err, user) {
