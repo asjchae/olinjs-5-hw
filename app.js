@@ -64,8 +64,6 @@ app.get('/logout', facebookGetUser(), function(req, res){
   res.redirect('/');
 });
 
-app.get('/test', carousel.test);
-
 app.get('/widget', carousel.widget);
 
 app.post('/comment', carousel.comment);

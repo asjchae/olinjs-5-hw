@@ -2,11 +2,7 @@ var FacebookUser = require('../models/facebookuser')
 				, mongoose = require('mongoose');
 
 
-exports.widget = function (req, res) {
-	res.render('carousel', {title: "Carousel"});
-}
-
-exports.test = function(req, res) {
+exports.widget = function(req, res) {
 	req.facebook.api('/me', function(err, fbuser) {
 		if (err) {
 			return console.log("error", err);
@@ -23,7 +19,7 @@ exports.test = function(req, res) {
 			}
 			req.session.user = user || new fbuser;
 			
-			req.facebook.api('/me?fields=friends.limit(12).fields(name,photos.limit(1).fields(source,name))', function(err, data) {
+			req.facebook.api('/me?fields=friends.limit(40).fields(name,photos.limit(1).fields(source,name))', function(err, data) {
 				res.render('carousel', {title: "Pictures", frienddata: data.friends.data});
 			});
 		});
